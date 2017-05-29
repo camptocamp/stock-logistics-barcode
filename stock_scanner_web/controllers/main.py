@@ -148,6 +148,11 @@ class ScannerWeb(http.Controller):
             result = {
                 'header': lines[0],
                 'lines': lines[1:]}
+        elif code == 'R':
+            result = {
+                'header': '',
+                'lines': result
+            }
         values = {
             'code': code,
             'result': result,

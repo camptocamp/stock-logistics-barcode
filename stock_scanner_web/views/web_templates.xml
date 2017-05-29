@@ -79,7 +79,7 @@
                             <i class="fa fa-bars"></i> <span class="hidden-xs">Main Menu</span>
                         </a>
                     </div>
-                    <t t-if="code != 'W' and result.get('header')">
+                    <t t-if="code not in ['R','W'] and result.get('header')">
                         <h2 class="text-center" t-esc="result.get('header')"/>
                     </t>
                     <t t-if="code == 'L'">

@@ -21,4 +21,9 @@
         "views/warehouse_menu.xml",
         "views/res_user_view.xml",
     ],
+    'demo': [
+        'demo/template_view.xml',
+        'demo/TutorialWeb.scenario',
+        'demo/Web_step_type/Web_step_type.scenario',
+    ],
 }
