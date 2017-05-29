@@ -38,18 +38,22 @@ class ScannerHardware(models.Model):
         """
         Remove log-in / log-out scenarios if we run under the web interface
         """
-
         if self.env.context.get('stock_scanner_call_from_web', False):
             scanner_scenario_obj = self.env['scanner.scenario']
             scanner_scenario_login = self.env.ref(
                 'stock_scanner.scanner_scenario_login')
             scanner_scenario_logout = self.env.ref(
                 'stock_scanner.scanner_scenario_logout')
+            search_domain = [
+                ('parent_id', '=', parent_id)]
+            if self.warehouse_id:
+                search_domain += [
+                    '|',
+                    ('warehouse_ids', 'in', [self.warehouse_id.id])]
+            search_domain.append(
+                ('warehouse_ids', '=', False))
             scanner_scenarios = scanner_scenario_obj.search(
-                ['|',
-                 ('warehouse_ids', '=', False),
-                 ('warehouse_ids', 'in', [self.warehouse_id.id]),
-                 ('parent_id', '=', parent_id)])
+                search_domain)
             scenario_names = [scenario.name for scenario in
                               scanner_scenarios if scenario not in (
                                   scanner_scenario_login,
