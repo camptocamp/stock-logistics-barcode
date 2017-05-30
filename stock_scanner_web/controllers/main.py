@@ -37,9 +37,12 @@ class ScannerWeb(http.Controller):
                      website=True,
                      **kwargs):
         values = {}  # Reset the values.
+        parameters = kwargs.copy()
+        if 'debug' in parameters:
+            parameters.pop('debug')
         if message == 'False':
             message = False
-        if not message and kwargs:
+        if not message and parameters:
             message = kwargs
         # Determine the correct hardware:
         scanner_hardware = False

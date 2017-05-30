@@ -2,6 +2,8 @@
 <!--
     Copyright 2016 Eficent Business and IT Consulting Services, S.L.
     <http://www.eficent.com>
+    Copyright 2017 PESOL - Angel Moya.
+    <http://www.pesol.es>
     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 <odoo>
@@ -9,12 +11,17 @@
     <template id="scanner_layout" name="header">
         <t t-call="web.layout">
             <t t-set="head">
+                <t t-call-assets="web.assets_common"/>
+                <t t-call-assets="web.assets_backend"/>
                 <meta name="viewport" content="width=device-width"/>
                 <link rel="stylesheet" href="/web/static/lib/bootstrap/css/bootstrap.css"/>
                 <link rel="stylesheet" href="/web/static/lib/fontawesome/css/font-awesome.css"/>
                 <link rel="stylesheet" href="/stock_scanner_web/static/lib/css/responsive.css"/>
                 <script src="/web/static/lib/jquery/jquery.js" type="text/javascript"/>
+                <script src="/web/static/lib/bootstrap/js/tooltip.js" type="text/javascript"/>
+                <script src="/web/static/lib/bootstrap/js/popover.js" type="text/javascript"/>
                 <script src="/stock_scanner_web/static/lib/js/responsive.js" type="text/javascript"/>
+                <script src="/stock_scanner_web/static/src/js/stock_scanner_web.tour.js"/>
             </t>
             <t t-raw="0"/>
         </t>
@@ -62,7 +69,7 @@
                     </div>
                     <div t-if="code == 'E'" class="block-bottom">
                         <a id="btn-back" t-attf-href="/stock_scanner_web/" class="btn btn-default">
-                           Back
+                            Back
                         </a>
                     </div>
                 </div>
@@ -76,7 +83,8 @@
                 <div class="container">
                     <div t-if="action is not 'reset'">
                         <a id="btn-home" t-attf-href="/stock_scanner_web/{{terminal_number}}/{{step}}/?action=reset" class="btn btn-info">
-                            <i class="fa fa-bars"></i> <span class="hidden-xs">Main Menu</span>
+                            <i class="fa fa-bars"></i>
+                            <span class="hidden-xs">Main Menu</span>
                         </a>
                     </div>
                     <t t-if="code not in ['R','W'] and result.get('header')">
@@ -87,7 +95,7 @@
                             <t t-foreach="result.get('lines')" t-as="line">
                                 <div class="col-xs-12 col-sm-4 col-md-3">
                                     <div class="list-group">
-                                        <a class="list-group-item list-group-item-info text-center" t-attf-href="{{line.get('href')}}">
+                                        <a class="list-group-item list-group-item-info text-center js_item" t-attf-href="{{line.get('href')}}">
                                             <h4 class="list-group-item-heading" t-esc="line.get('label')"/>
                                             <!-- <p class="list-group-item-text">You can put text here</p> -->
                                         </a>
