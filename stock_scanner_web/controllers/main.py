@@ -123,6 +123,8 @@ class ScannerWeb(http.Controller):
         scenario_step = request.env['scanner.hardware'].\
             search([('code', '=', terminal_number)]).step_id
         step = scenario_step and int(scenario_step) or 0
+        header = False
+        lines = False
         if code == 'L':
             header = ''
             lines = []
@@ -151,12 +153,13 @@ class ScannerWeb(http.Controller):
         elif code == 'R':
             header = ''
             lines = result
-        if header and header[0] == '|':
-            header = header[1:]
-        result = {
-            'header': header,
-            'lines': lines
-        }
+        if code != 'W':
+            if header and header[0] == '|':
+                header = header[1:]
+            result = {
+                'header': header,
+                'lines': lines
+            }
         lang = request.env['res.lang'].search([('code', '=', user.lang)])
         values = {
             'code': code,
