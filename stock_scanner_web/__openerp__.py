@@ -18,6 +18,7 @@
     ],
     "data": [
         "views/web_templates.xml",
+        "views/scanner_hardware.xml",
         "views/warehouse_menu.xml",
         "views/res_user_view.xml",
     ],
