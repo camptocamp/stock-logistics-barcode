@@ -12,7 +12,6 @@ class ScannerHardware(models.Model):
     show_numpad = fields.Selection(
         [('yes', 'Yes'),
          ('no', 'No'),
-         # TODO: ('dinamic', 'Dynamic'),
         ],
         string='Show Numpad')
 
