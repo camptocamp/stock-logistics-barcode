@@ -11,22 +11,26 @@ class TestModule(TransactionCase):
     def setUp(self):
         super().setUp()
 
-        self.ResCompany = self.env["res.company"]
         self.ProductProduct = self.env["product.product"]
-        self.company_1 = self.ResCompany.create({"name": "Company 1"})
-        self.company_2 = self.ResCompany.create({"name": "Company 2"})
+        self.company_1 = self.env["res.company"].create({"name": "Company 1"})
+        self.company_2 = self.env["res.company"].create({"name": "Company 2"})
 
     # Test Section
     def test_create_same_company(self):
-        self._create_product("Product 1", self.company_1)
+        product_1 = self._create_product("Product 1", self.company_1)
+        self.assertEqual(product_1.company_id, self.company_1)
+        self.assertEqual(product_1.product_tmpl_id.company_id, self.company_1)
 
         with self.assertRaises(IntegrityError), mute_logger("odoo.sql_db"):
             product2 = self._create_product("Product 2", self.company_1)
             product2.flush()
 
     def test_create_different_company(self):
-        self._create_product("Product 1", self.company_1)
-        self._create_product("Product 2", self.company_2)
+        product_1 = self._create_product("Product 1", self.company_1)
+        product_2 = self._create_product("Product 2", self.company_2)
+        self.assertEqual(product_1.company_id, self.company_1)
+        self.assertEqual(product_2.company_id, self.company_2)
+        self.assertEqual(product_2.product_tmpl_id.company_id, self.company_2)
 
     def _create_product(self, name, company):
         vals = {
