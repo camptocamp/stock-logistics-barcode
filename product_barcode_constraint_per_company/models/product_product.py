@@ -9,7 +9,9 @@ class ProductProduct(models.Model):
     _inherit = "product.product"
 
     # Store related field
-    company_id = fields.Many2one(related="product_tmpl_id.company_id", store=True)
+    company_id = fields.Many2one(
+        related="product_tmpl_id.company_id", store=True, readonly=False
+    )
 
     _sql_constraints = [
         # Replace constraint with same name
