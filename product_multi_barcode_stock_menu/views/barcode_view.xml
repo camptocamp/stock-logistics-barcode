@@ -11,6 +11,7 @@
                 <field name="name" />
                 <field name="product_id" />
                 <field name="product_tmpl_id" />
+                <field name="packaging_id" />
             </tree>
         </field>
     </record>
