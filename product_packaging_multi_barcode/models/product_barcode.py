@@ -14,6 +14,30 @@ class ProductBarcode(models.Model):
         ondelete="cascade",
     )
 
+    display_product_id = fields.Many2one(
+        string="Display Product",
+        comodel_name="product.product",
+        compute="_compute_display_product",
+        store=True,
+        readonly=False,
+        ondelete="cascade",
+    )
+
+    @api.depends("product_id", "packaging_id")
+    def _compute_display_product(self):
+        for rec in self:
+            rec.display_product_id = rec.product_id or rec.packaging_id.product_id
+
+    @api.constrains("packaging_id", "product_id")
+    def _check_not_define_product_and_packaging(self):
+        for record in self:
+            if record.packaging_id and record.product_id:
+                raise ValidationError(
+                    _(
+                        "The Product and the packaging should not me set at the same time !"
+                    )
+                )
+
     @api.constrains("name")
     def _check_duplicates(self):
         """Override this method to change the error messages"""
