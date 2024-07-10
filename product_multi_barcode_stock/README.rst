@@ -1,5 +1,5 @@
 ======================
-Multiple barcodes menu
+Multiple barcodes stock
 ======================
 
 .. 
